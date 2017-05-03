@@ -2,13 +2,18 @@ package com.aminesghir.leaguehelper.Data.Model;
 
 public class Summoner {
 
-    private int id;
+    private long id;
+    private long accountId;
     private String name;
     private int level;
 
-    public int getId(){ return this.id; }
+    public long getId(){ return this.id; }
 
-    public void setId(int i){ this.id = i; }
+    public void setId(long i){ this.id = i; }
+
+    public long getAccountId(){ return this.accountId; }
+
+    public void setAccountId(long i){ this.accountId = i; }
 
     public String getName(){ return this.name; }
 

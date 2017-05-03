@@ -44,7 +44,7 @@ public class SummonerDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            summoner = JsonSummonerParser.jsonToSummoner(summonerName,s);
+            summoner = JsonSummonerParser.jsonToSummoner(s);
 
             displaySummonerInfo();
         }
@@ -55,6 +55,7 @@ public class SummonerDetailActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.idTextView)).setText(String.valueOf(summoner.getId()));
         ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getName());
         ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLevel()));
+        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(summoner.getAccountId()));
     }
 
     private void getSummonerNameFromIntent() {

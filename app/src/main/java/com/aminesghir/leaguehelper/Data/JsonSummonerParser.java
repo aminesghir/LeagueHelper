@@ -1,5 +1,7 @@
 package com.aminesghir.leaguehelper.Data;
 
+import android.util.Log;
+
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
 
 import org.json.JSONException;
@@ -11,15 +13,16 @@ import org.json.JSONObject;
 
 public class JsonSummonerParser {
 
-    public static Summoner jsonToSummoner(String summonerName, String json){
+    public static Summoner jsonToSummoner(String json){
         Summoner summoner = new Summoner();
 
         try {
             JSONObject jo = new JSONObject(json);
 
-            summoner.setId(jo.getJSONObject(summonerName.toLowerCase()).getInt("id"));
-            summoner.setName(jo.getJSONObject(summonerName.toLowerCase()).getString("name"));
-            summoner.setLevel(jo.getJSONObject(summonerName.toLowerCase()).getInt("summonerLevel"));
+            summoner.setId(jo.getLong("id"));
+            summoner.setName(jo.getString("name"));
+            summoner.setLevel(jo.getInt("summonerLevel"));
+            summoner.setAccountId(jo.getLong("accountId"));
 
 
         } catch (JSONException e) {

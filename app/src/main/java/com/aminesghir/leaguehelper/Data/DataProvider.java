@@ -20,7 +20,7 @@ public class DataProvider {
 
         try {
             URL url = new URL(
-                    "https://euw.api.riotgames.com/api/lol/EUW/v1.4/summoner/by-name/"+
+                    "https://euw1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"+
                             summonerName+
                             "?api_key="+
                             API_KEY);
