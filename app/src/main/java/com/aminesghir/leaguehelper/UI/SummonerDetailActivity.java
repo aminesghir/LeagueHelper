@@ -1,17 +1,21 @@
-package com.aminesghir.leaguehelper;
+package com.aminesghir.leaguehelper.UI;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.aminesghir.leaguehelper.Data.DataProvider;
+import com.aminesghir.leaguehelper.Data.JsonSummonerParser;
+import com.aminesghir.leaguehelper.R;
+import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class SummonerDetailActivity extends AppCompatActivity {
 
     private String summonerName;
+    private Summoner summoner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,8 @@ public class SummonerDetailActivity extends AppCompatActivity {
 
         DisplayDataTask displayData = new DisplayDataTask();
         displayData.execute();
+
+
 
     }
 
@@ -38,18 +44,20 @@ public class SummonerDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            try {
-                JSONObject json = new JSONObject(s);
-                ((TextView)findViewById(R.id.idTextView)).setText(json.getJSONObject(summonerName.toLowerCase()).getString("id"));
-                ((TextView)findViewById(R.id.nameTextView)).setText(json.getJSONObject(summonerName.toLowerCase()).getString("name"));
-                ((TextView)findViewById(R.id.levelTextView)).setText(json.getJSONObject(summonerName.toLowerCase()).getString("summonerLevel"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            summoner = JsonSummonerParser.jsonToSummoner(summonerName,s);
+
+            displaySummonerInfo();
         }
     }
 
+    private void displaySummonerInfo() {
+
+        ((TextView)findViewById(R.id.idTextView)).setText(String.valueOf(summoner.getId()));
+        ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getName());
+        ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLevel()));
+    }
+
     private void getSummonerNameFromIntent() {
-        this.summonerName = getIntent().getStringExtra("SUMMONER_NAME");
+        summonerName = getIntent().getStringExtra("SUMMONER_NAME");
     }
 }

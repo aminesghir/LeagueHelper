@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aminesghir.leaguehelper.SummonerDetailActivity"
+    tools:context="com.aminesghir.leaguehelper.UI.SummonerDetailActivity"
     android:orientation="vertical">
     <TextView
         android:id="@+id/title"

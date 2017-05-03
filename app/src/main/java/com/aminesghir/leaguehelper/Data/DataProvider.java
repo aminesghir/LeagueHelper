@@ -1,4 +1,4 @@
-package com.aminesghir.leaguehelper;
+package com.aminesghir.leaguehelper.Data;
 
 import java.io.BufferedReader;
 import java.io.IOException;
