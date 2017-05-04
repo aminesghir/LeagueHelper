@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.aminesghir.leaguehelper.Data.DataProvider;
-import com.aminesghir.leaguehelper.Data.JsonSummonerParser;
+import com.aminesghir.leaguehelper.Data.JsonParser;
 import com.aminesghir.leaguehelper.R;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class SummonerDetailActivity extends AppCompatActivity {
 
@@ -44,7 +42,7 @@ public class SummonerDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            summoner = JsonSummonerParser.jsonToSummoner(s);
+            summoner = JsonParser.jsonToSummoner(s);
 
             displaySummonerInfo();
         }

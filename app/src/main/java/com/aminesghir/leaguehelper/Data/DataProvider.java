@@ -67,4 +67,59 @@ public class DataProvider {
         return summoner;
     }
 
+    public static String getMatchListByAccountId(Long accountId){
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+
+        String response = null;
+
+        try {
+            URL url = new URL(
+                    "https://euw1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+
+                            String.valueOf(accountId)+
+                            "/recent?api_key="+
+                            API_KEY);
+
+            urlConnection = (HttpURLConnection)url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (inputStream == null){
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+
+            while((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                return null;
+            }
+
+            response = buffer.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return response;
+    }
+
 }
