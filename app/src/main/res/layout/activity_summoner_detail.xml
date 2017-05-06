@@ -6,15 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.aminesghir.leaguehelper.UI.SummonerDetailActivity"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.6"
         android:text="Summoner Name"
-        android:layout_marginTop="10dp"
         android:textSize="25sp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"/>
+    <Button
+        android:id="@+id/button"
+        android:text="History"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/idLinearLayout"
@@ -42,7 +55,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/idLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -67,7 +79,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/nameLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -92,7 +103,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/levelLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

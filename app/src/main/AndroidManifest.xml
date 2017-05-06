@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.SummonerDetailActivity"></activity>
+        <activity android:name=".UI.SummonerDetailActivity" />
+        <activity android:name=".UI.MatchListActivity" />
     </application>
 
 </manifest>

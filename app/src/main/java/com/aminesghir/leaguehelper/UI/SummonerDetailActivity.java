@@ -1,8 +1,11 @@
 package com.aminesghir.leaguehelper.UI;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.aminesghir.leaguehelper.Data.DataProvider;
@@ -22,8 +25,6 @@ public class SummonerDetailActivity extends AppCompatActivity {
 
         DisplayDataTask displayData = new DisplayDataTask();
         displayData.execute();
-
-
 
     }
 
@@ -54,6 +55,15 @@ public class SummonerDetailActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getName());
         ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLevel()));
         ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(summoner.getAccountId()));
+
+        ((Button)findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SummonerDetailActivity.this, MatchListActivity.class);
+                intent.putExtra("ACCOUNT_ID", summoner.getAccountId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void getSummonerNameFromIntent() {
