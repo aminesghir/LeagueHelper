@@ -2,6 +2,7 @@ package com.aminesghir.leaguehelper.UI;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,7 +57,9 @@ public class MatchListActivity extends AppCompatActivity {
 
         @Override
         protected List<GameSummoner> doInBackground(Void... params) {
-            return JsonParser.jsonToGameSummoners(DataProvider.getMatchListByAccountId(accountId));
+            return JsonParser.jsonToGameSummoners(
+                    DataProvider.getMatchListByAccountId(accountId),
+                    DataProvider.getChampionsStaticData());
         }
 
         @Override

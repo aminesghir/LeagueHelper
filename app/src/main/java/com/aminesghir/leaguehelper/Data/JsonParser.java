@@ -2,6 +2,7 @@ package com.aminesghir.leaguehelper.Data;
 
 import com.aminesghir.leaguehelper.Data.Model.Game;
 import com.aminesghir.leaguehelper.Data.Model.GameSummoner;
+import com.aminesghir.leaguehelper.Data.Model.StaticData.Champion;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import com.aminesghir.leaguehelper.Data.Model.Teammate;
 
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,18 +44,18 @@ public class JsonParser {
         }
     }
 
-    public static List<GameSummoner> jsonToGameSummoners(String json) {
+    public static List<GameSummoner> jsonToGameSummoners(String matches, String champions) {
 
         try {
-            JSONObject jo = new JSONObject(json);
+            JSONObject jsonMatches = new JSONObject(matches);
 
-            JSONArray ja = jo.getJSONArray("matches");
+            JSONArray ja = jsonMatches.getJSONArray("matches");
 
             ArrayList<GameSummoner> gameSummoners = new ArrayList<>(ja.length());
 
             for (int i=0; i< ja.length(); i++) {
                 JSONObject gameJson = (JSONObject) ja.get(i);
-                gameSummoners.add(jsonToGameSummoner(gameJson));
+                gameSummoners.add(jsonToGameSummoner(gameJson, champions));
             }
             return gameSummoners;
         } catch (JSONException e) {
@@ -65,16 +67,18 @@ public class JsonParser {
         }
     }
 
-    private static GameSummoner jsonToGameSummoner(JSONObject gameJson) {
+    private static GameSummoner jsonToGameSummoner(JSONObject gameJson, String champions) {
         GameSummoner gameSummoner = new GameSummoner();
         try {
+
+
 
             gameSummoner.setGameId(gameJson.getLong("gameId"));
             gameSummoner.setRegion(gameJson.getString("platformId"));
             gameSummoner.setQueueId(gameJson.getInt("queue"));
             gameSummoner.setSeason(gameJson.getInt("season"));
             gameSummoner.setTimestamp(gameJson.getLong("timestamp"));
-            gameSummoner.setChampionId(gameJson.getInt("champion"));
+            gameSummoner.setChampion(getChampionFromJsonById(champions, gameJson.getLong("champion")));
             gameSummoner.setRole(gameJson.getString("role"));
             gameSummoner.setLane(gameJson.getString("lane"));
 
@@ -151,6 +155,40 @@ public class JsonParser {
             e.printStackTrace();
             return null;
         }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Champion jsonToChampion(JSONObject jo){
+        try {
+            Champion champion = new Champion();
+            champion.setId(jo.getLong("id"));
+            champion.setName(jo.getString("name"));
+            champion.setKey(jo.getString("key"));
+            champion.setTitle(jo.getString("title"));
+
+            return champion;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public  static Champion getChampionFromJsonById(String json, long id){
+        try {
+            JSONObject jo = (new JSONObject(json)).getJSONObject("data");
+
+            Iterator<String> keys = jo.keys();
+
+            while (keys.hasNext()){
+                String keyValue = keys.next();
+                if( jo.getJSONObject(keyValue).getLong("id") == id){
+                    return jsonToChampion(jo.getJSONObject(keyValue));
+                }
+            }
+            return null;
+        }catch (JSONException e){
             e.printStackTrace();
             return null;
         }

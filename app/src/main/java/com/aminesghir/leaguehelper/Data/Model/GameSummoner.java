@@ -1,5 +1,7 @@
 package com.aminesghir.leaguehelper.Data.Model;
 
+import com.aminesghir.leaguehelper.Data.Model.StaticData.Champion;
+
 /**
  * Created by user on 04/05/2017.
  */
@@ -11,13 +13,17 @@ public class GameSummoner {
     private int queueId;
     private int season;
     private long timestamp;
-    private int championId;
+    private Champion champion;
     private String role;
     private String lane;
     private boolean win;
 
-    public int getChampionId() {
-        return championId;
+    public Champion getChampion() {
+        return champion;
+    }
+
+    public void setChampion(Champion champion) {
+        this.champion = champion;
     }
 
     public long getGameId() {
@@ -32,9 +38,6 @@ public class GameSummoner {
         return role;
     }
 
-    public void setChampionId(int championId) {
-        this.championId = championId;
-    }
 
     public void setGameId(long gameId) {
         this.gameId = gameId;
