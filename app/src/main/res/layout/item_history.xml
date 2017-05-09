@@ -7,43 +7,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+        <ImageView
+            android:id="@+id/championImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@color/colorPrimaryDark"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/gameId"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/championId"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:gravity="center"
-                android:text="id"
+                android:text="champion"
                 android:layout_weight="0.5"/>
             <TextView
-                android:id="@+id/region"
+                android:id="@+id/role"
                 android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="region"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="role"
                 android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
             <TextView
                 android:gravity="center"
                 android:text="queue"
                 android:id="@+id/queue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"/>
             <TextView
-                android:text="season"
+                android:text="lane"
                 android:gravity="center"
-                android:id="@+id/season"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/lane"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>

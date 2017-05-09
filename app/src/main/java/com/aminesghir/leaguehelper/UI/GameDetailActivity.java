@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aminesghir.leaguehelper.Data.DataProvider;
 import com.aminesghir.leaguehelper.Data.JsonParser;
@@ -24,6 +26,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     }
 
+
     private class DisplayGameInfoTask extends AsyncTask<Void, Void, Game>{
 
         @Override
@@ -38,6 +41,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Game game) {
+            if (game != null) {
             String s = "Winners :\n";
             for(int i = 0; i<game.getWinners().size(); i++){
                 s = s + game.getWinners().get(i).getSummoner().getName() +" - " +
@@ -51,6 +55,10 @@ public class GameDetailActivity extends AppCompatActivity {
                 s = s + game.getLosers().get(i).getSummoner().getName() +" " + game.getLosers().get(i).getRole() + " " + game.getLosers().get(i).getLane() + "\n";
             }
             ((TextView)findViewById(R.id.losers)).setText(s);
+            }else {
+                Toast.makeText(getApplicationContext(), "Unable to retrieve game details", Toast.LENGTH_LONG).show();
+                GameDetailActivity.this.onBackPressed();
+            }
         }
     }
 

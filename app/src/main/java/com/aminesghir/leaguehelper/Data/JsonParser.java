@@ -24,18 +24,21 @@ public class JsonParser {
             Summoner summoner = new Summoner();
 
 
-        JSONObject jo = new JSONObject(json);
+            JSONObject jo = new JSONObject(json);
 
-        summoner.setId(jo.getLong("id"));
-        summoner.setName(jo.getString("name"));
-        summoner.setLevel(jo.getInt("summonerLevel"));
-        summoner.setAccountId(jo.getLong("accountId"));
+            summoner.setId(jo.getLong("id"));
+            summoner.setName(jo.getString("name"));
+            summoner.setLevel(jo.getInt("summonerLevel"));
+            summoner.setAccountId(jo.getLong("accountId"));
 
 
-        return summoner;
+            return summoner;
         }catch (JSONException e){
             e.printStackTrace();
-            return (new Summoner());
+            return null;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -44,35 +47,44 @@ public class JsonParser {
         try {
             JSONObject jo = new JSONObject(json);
 
-        JSONArray ja = jo.getJSONArray("matches");
+            JSONArray ja = jo.getJSONArray("matches");
 
-        ArrayList<GameSummoner> gameSummoners = new ArrayList<>(ja.length());
+            ArrayList<GameSummoner> gameSummoners = new ArrayList<>(ja.length());
 
-        for (int i=0; i< ja.length(); i++) {
-            JSONObject gameJson = (JSONObject) ja.get(i);
-            gameSummoners.add(jsonToGameSummoner(gameJson));
-        }
-        return gameSummoners;
+            for (int i=0; i< ja.length(); i++) {
+                JSONObject gameJson = (JSONObject) ja.get(i);
+                gameSummoners.add(jsonToGameSummoner(gameJson));
+            }
+            return gameSummoners;
         } catch (JSONException e) {
             e.printStackTrace();
-            return (new ArrayList<>(0));
+            return null;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
         }
     }
 
     private static GameSummoner jsonToGameSummoner(JSONObject gameJson) {
+        GameSummoner gameSummoner = new GameSummoner();
         try {
-            GameSummoner gameSummoner = new GameSummoner();
 
-            gameSummoner.setId(gameJson.getLong("gameId"));
+            gameSummoner.setGameId(gameJson.getLong("gameId"));
+            gameSummoner.setRegion(gameJson.getString("platformId"));
+            gameSummoner.setQueueId(gameJson.getInt("queue"));
+            gameSummoner.setSeason(gameJson.getInt("season"));
+            gameSummoner.setTimestamp(gameJson.getLong("timestamp"));
+            gameSummoner.setChampionId(gameJson.getInt("champion"));
+            gameSummoner.setRole(gameJson.getString("role"));
+            gameSummoner.setLane(gameJson.getString("lane"));
 
-        gameSummoner.setRegion(gameJson.getString("platformId"));
-        gameSummoner.setQueue(gameJson.getInt("queue"));
-        gameSummoner.setSeason(gameJson.getInt("season"));
-        gameSummoner.setTimestamp(gameJson.getLong("timestamp"));
-
-        return gameSummoner;} catch (JSONException e) {
+            return gameSummoner;
+        } catch (JSONException e) {
             e.printStackTrace();
-            return (new GameSummoner());
+            return null;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -137,7 +149,10 @@ public class JsonParser {
             return game;
         }catch (JSONException e){
             e.printStackTrace();
-            return (new Game());
+            return null;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

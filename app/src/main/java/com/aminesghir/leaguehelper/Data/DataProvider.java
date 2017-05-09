@@ -1,5 +1,7 @@
 package com.aminesghir.leaguehelper.Data;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +13,7 @@ import java.net.URL;
 public class DataProvider {
 
     private static final String API_KEY = "RGAPI-c9cf9b74-18c1-4c73-902d-eddcefd156c4";
+    private static final int STATUS_OK = 200;
 
     public static String getSummonerByName(String summonerName){
         HttpURLConnection urlConnection = null;
@@ -28,6 +31,10 @@ public class DataProvider {
             urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
+
+            if(urlConnection.getResponseCode() != STATUS_OK){
+                return null;
+            }
 
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
@@ -84,6 +91,10 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+            if(urlConnection.getResponseCode() != STATUS_OK){
+                return null;
+            }
+
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
 
@@ -138,6 +149,10 @@ public class DataProvider {
             urlConnection = (HttpURLConnection)url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
+
+            if(urlConnection.getResponseCode() != STATUS_OK){
+                return null;
+            }
 
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();

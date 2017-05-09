@@ -36,7 +36,7 @@ public class GameSummonerAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return datasource.get(position).getId();
+        return datasource.get(position).getGameId();
     }
 
     @Override
@@ -44,14 +44,14 @@ public class GameSummonerAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);
 
         GameSummoner gameSummoner = datasource.get(position);
-        ((TextView)convertView.findViewById(R.id.gameId)).setText("id : " + gameSummoner.getId());
-        ((TextView)convertView.findViewById(R.id.region)).setText("region : " + gameSummoner.getRegion());
-        ((TextView)convertView.findViewById(R.id.queue)).setText("queue : " + gameSummoner.getQueue());
-        ((TextView)convertView.findViewById(R.id.season)).setText("season : " + gameSummoner.getSeason());
+        ((TextView)convertView.findViewById(R.id.championId)).setText("champion : " + String.valueOf(gameSummoner.getChampionId()));
+        ((TextView)convertView.findViewById(R.id.role)).setText(gameSummoner.getRole());
+        ((TextView)convertView.findViewById(R.id.queue)).setText(gameSummoner.getQueue());
+        ((TextView)convertView.findViewById(R.id.lane)).setText(gameSummoner.getLane());
         return convertView;
     }
 
     public long getGameId(int position){
-        return datasource.get(position).getId();
+        return datasource.get(position).getGameId();
     }
 }

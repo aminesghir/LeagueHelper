@@ -6,19 +6,76 @@ package com.aminesghir.leaguehelper.Data.Model;
 
 public class GameSummoner {
 
-    private long id;
+    private long gameId;
     private String region;
-    private int queue;
+    private int queueId;
     private int season;
     private long timestamp;
+    private int championId;
+    private String role;
+    private String lane;
+    private boolean win;
 
-    public long getId() {
-        return id;
+    public int getChampionId() {
+        return championId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getGameId() {
+        return gameId;
     }
+
+    public String getLane() {
+        return lane;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setChampionId(int championId) {
+        this.championId = championId;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
+    }
+
+    public void setLane(String lane) {
+        this.lane = lane;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getQueueId() {
+        return queueId;
+    }
+
+    public void setQueueId(int queueId) {
+        this.queueId = queueId;
+    }
+
+    public String getQueue(){
+        switch (queueId){
+            case 420 :
+                return "Ranked 5x5";
+            case 410:
+                return "Normal 5x5";
+            case 65:
+                return "ARAM";
+        }
+        return "Unknown Queue";
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
 
     public String getRegion() {
         return region;
@@ -26,14 +83,6 @@ public class GameSummoner {
 
     public void setRegion(String region) {
         this.region = region;
-    }
-
-    public int getQueue() {
-        return queue;
-    }
-
-    public void setQueue(int queue) {
-        this.queue = queue;
     }
 
     public int getSeason() {
