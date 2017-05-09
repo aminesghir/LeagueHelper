@@ -7,6 +7,10 @@ public class Summoner {
     private String name;
     private int level;
 
+    public Summoner(){
+        this.level = 30;
+    }
+
     public long getId(){ return this.id; }
 
     public void setId(long i){ this.id = i; }

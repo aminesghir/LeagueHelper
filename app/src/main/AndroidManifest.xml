@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".UI.SummonerDetailActivity" />
         <activity android:name=".UI.MatchListActivity" />
+        <activity android:name=".UI.GameDetailActivity"></activity>
     </application>
 
 </manifest>
