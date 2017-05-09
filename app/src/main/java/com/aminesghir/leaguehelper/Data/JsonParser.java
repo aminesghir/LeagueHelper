@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -191,6 +190,27 @@ public class JsonParser {
         }catch (JSONException e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void addLeagueData(Summoner summoner, String s){
+        try {
+            JSONArray ja = new JSONArray(s);
+
+            for(int i = 0; i<ja.length(); i++){
+                JSONObject jo = ja.getJSONObject(i);
+                if(jo.getString("queueType").equals("RANKED_SOLO_5x5")){
+                    summoner.setTier(jo.getString("tier"));
+                    summoner.setRank(jo.getString("rank"));
+                    summoner.setLeaguePoints(jo.getInt("leaguePoints"));
+                    summoner.setWins(jo.getInt("wins"));
+                    summoner.setLoses(jo.getInt("losses"));
+                }
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

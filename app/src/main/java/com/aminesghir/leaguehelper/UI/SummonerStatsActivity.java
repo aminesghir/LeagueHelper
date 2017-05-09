@@ -27,6 +27,8 @@ public class SummonerStatsActivity extends AppCompatActivity {
         DisplayDataTask displayData = new DisplayDataTask();
         displayData.execute();
 
+
+
     }
 
 
@@ -47,7 +49,8 @@ public class SummonerStatsActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             summoner = JsonParser.jsonToSummoner(s);
             if (summoner != null) {
-                displaySummonerInfo();
+                DisplayLeagueDataTask displayLeagueDataTask = new DisplayLeagueDataTask();
+                displayLeagueDataTask.execute();
             }else{
                 Toast.makeText(getApplicationContext(), "Summoner not found", Toast.LENGTH_LONG).show();
                 SummonerStatsActivity.this.onBackPressed();
@@ -55,12 +58,31 @@ public class SummonerStatsActivity extends AppCompatActivity {
         }
     }
 
+    private class DisplayLeagueDataTask extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return DataProvider.getLeagueData(summoner.getId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            JsonParser.addLeagueData(summoner, s);
+            displaySummonerInfo();
+        }
+    }
+
     private void displaySummonerInfo() {
 
-        ((TextView)findViewById(R.id.idTextView)).setText(String.valueOf(summoner.getId()));
-        ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getName());
-        ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLevel()));
-        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(summoner.getAccountId()));
+        ((TextView)findViewById(R.id.idTextView)).setText(summoner.getName());
+        ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getTier()+ " - " +summoner.getRank());
+        ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLeaguePoints()));
+        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(100*((float)summoner.getWins()/((float)summoner.getLoses()+(float)summoner.getWins())))+ " %");
 
 
         SummonerDetailActivity.setAccountId(summoner.getAccountId());

@@ -77,7 +77,7 @@ public class DataProvider {
         return summoner;
     }
 
-    public static String getMatchListByAccountId(Long accountId){
+    public static String getMatchListByAccountId(long accountId){
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -136,7 +136,7 @@ public class DataProvider {
         return response;
     }
 
-    public static String getMatchDetailById(Long matchId){
+    public static String getMatchDetailById(long matchId){
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -269,6 +269,64 @@ public class DataProvider {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getLeagueData(long SummonerId){
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+
+        String response = null;
+
+        try {
+            URL url = new URL(
+                    "https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/"+
+                            String.valueOf(SummonerId)+
+                            "?api_key=" + API_KEY);
+
+            urlConnection = (HttpURLConnection)url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            if(urlConnection.getResponseCode() != STATUS_OK){
+                return null;
+            }
+
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+
+            if (inputStream == null){
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+
+            while((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                return null;
+            }
+
+            response = buffer.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return response;
     }
 
 }

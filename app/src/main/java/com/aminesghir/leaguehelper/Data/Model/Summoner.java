@@ -6,6 +6,51 @@ public class Summoner {
     private long accountId;
     private String name;
     private int level;
+    private String tier;
+    private String rank;
+    private int leaguePoints;
+    private int wins;
+    private int loses;
+
+    public String getTier() {
+        return tier;
+    }
+
+    public void setTier(String tier) {
+        this.tier = tier;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public int getLeaguePoints() {
+        return leaguePoints;
+    }
+
+    public void setLeaguePoints(int leaguePoints) {
+        this.leaguePoints = leaguePoints;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
+    }
 
     public Summoner(){
         this.level = 30;
@@ -26,4 +71,10 @@ public class Summoner {
     public int getLevel(){ return this.level; }
 
     public void setLevel(int l){ this.level = l; }
+
+
+
+    private void getLeagueData(){
+
+    }
 }
