@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,8 @@ public class SummonerStatsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.idTextView)).setText(summoner.getName());
         ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getTier()+ " - " +summoner.getRank());
         ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLeaguePoints()));
-        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(100*((float)summoner.getWins()/((float)summoner.getLoses()+(float)summoner.getWins())))+ " %");
+        ((ProgressBar)findViewById(R.id.circularProgressbar)).setProgress((int)summoner.getWinrate());
+        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(String.valueOf(summoner.getWinrate()).substring(0,4) + "%"));
 
         SummonerDetailActivity.setSummoner(summoner);
         SummonerDetailActivity.setAccountId(summoner.getAccountId());

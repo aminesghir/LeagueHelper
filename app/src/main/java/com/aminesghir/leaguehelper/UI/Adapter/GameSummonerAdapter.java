@@ -70,7 +70,7 @@ public class GameSummonerAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return datasource.get(position).getGame().getCreationDate();
+            return datasource.get(position).getGameId();
     }
 
     @Override
@@ -151,6 +151,8 @@ public class GameSummonerAdapter extends BaseAdapter {
                 } else {
                     view.findViewById(R.id.layout).setBackgroundColor(Color.parseColor("#FFC6C6"));
                 }
+            }else{
+                view.findViewById(R.id.layout).setBackgroundColor(Color.parseColor("#FFFFCC"));
             }
         }
     }

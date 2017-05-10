@@ -1,5 +1,7 @@
 package com.aminesghir.leaguehelper.Data.Model;
 
+import java.text.DecimalFormat;
+
 public class Summoner {
 
     private long id;
@@ -72,7 +74,12 @@ public class Summoner {
 
     public void setLevel(int l){ this.level = l; }
 
-    private boolean equals(Summoner s){
+    public boolean equals(Summoner s){
         return (this.id == s.getId());
+    }
+
+    public float getWinrate(){
+        float p = (this.getWins() * 100.0f)/(this.getLoses()+this.getWins());
+        return p;
     }
 }
