@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.aminesghir.leaguehelper.Data.DataProvider;
 import com.aminesghir.leaguehelper.R;
 
 public class MainActivity extends AppCompatActivity {

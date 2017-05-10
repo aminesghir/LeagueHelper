@@ -43,7 +43,7 @@ public class JsonParser {
         }
     }
 
-    public static List<GameSummoner> jsonToGameSummoners(String matches, String champions) {
+    public static List<GameSummoner> jsonToGameSummoners(String matches, String champions, Summoner summoner) {
 
         try {
             JSONObject jsonMatches = new JSONObject(matches);
@@ -54,7 +54,7 @@ public class JsonParser {
 
             for (int i=0; i< ja.length(); i++) {
                 JSONObject gameJson = (JSONObject) ja.get(i);
-                gameSummoners.add(jsonToGameSummoner(gameJson, champions));
+                gameSummoners.add(jsonToGameSummoner(gameJson, champions, summoner));
             }
             return gameSummoners;
         } catch (JSONException e) {
@@ -66,11 +66,11 @@ public class JsonParser {
         }
     }
 
-    private static GameSummoner jsonToGameSummoner(JSONObject gameJson, String champions) {
+    private static GameSummoner jsonToGameSummoner(JSONObject gameJson, String champions, Summoner summoner) {
         GameSummoner gameSummoner = new GameSummoner();
         try {
 
-
+            gameSummoner.setSummoner(summoner);
 
             gameSummoner.setGameId(gameJson.getLong("gameId"));
             gameSummoner.setRegion(gameJson.getString("platformId"));
@@ -110,6 +110,10 @@ public class JsonParser {
             game.setMode(jo.getString("gameMode"));
             game.setType(jo.getString("gameType"));
 
+            if(jo.getInt("queueId") != 420){
+                return game;
+            }
+
             JSONObject team = jo.getJSONArray("teams").getJSONObject(0);
             TEAM_ID_WIN = team.getString("win").equals("Win")?
                     team.getInt("teamId"):
@@ -148,6 +152,7 @@ public class JsonParser {
             }
 
             game.setParticipants(teammates);
+
 
             return game;
         }catch (JSONException e){

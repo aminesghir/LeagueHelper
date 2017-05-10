@@ -72,9 +72,7 @@ public class Summoner {
 
     public void setLevel(int l){ this.level = l; }
 
-
-
-    private void getLeagueData(){
-
+    private boolean equals(Summoner s){
+        return (this.id == s.getId());
     }
 }

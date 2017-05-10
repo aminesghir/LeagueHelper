@@ -113,22 +113,28 @@ public class Game {
     }
 
     public List<Teammate> getWinners(){
-        List<Teammate> winners = new ArrayList<>(participants.size());
-        for(int i=0; i<participants.size();i++){
-            if(participants.get(i).isWinner()){
-                winners.add(participants.get(i));
+        if(participants != null) {
+            List<Teammate> winners = new ArrayList<>(participants.size());
+            for (int i = 0; i < participants.size(); i++) {
+                if (participants.get(i).isWinner()) {
+                    winners.add(participants.get(i));
+                }
             }
+            return winners;
         }
-        return winners;
+        return null;
     }
 
     public List<Teammate> getLosers(){
-        List<Teammate> losers = new ArrayList<>(participants.size());
-        for(int i=0; i<participants.size();i++){
-            if(!participants.get(i).isWinner()){
-                losers.add(participants.get(i));
+        if(participants != null) {
+            List<Teammate> losers = new ArrayList<>(participants.size());
+            for (int i = 0; i < participants.size(); i++) {
+                if (!participants.get(i).isWinner()) {
+                    losers.add(participants.get(i));
+                }
             }
+            return losers;
         }
-        return losers;
+        return null;
     }
 }

@@ -2,10 +2,12 @@ package com.aminesghir.leaguehelper.UI;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +16,9 @@ import android.widget.Toast;
 
 import com.aminesghir.leaguehelper.Data.DataProvider;
 import com.aminesghir.leaguehelper.Data.JsonParser;
+import com.aminesghir.leaguehelper.Data.Model.Game;
 import com.aminesghir.leaguehelper.Data.Model.GameSummoner;
+import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import com.aminesghir.leaguehelper.R;
 import com.aminesghir.leaguehelper.UI.Adapter.GameSummonerAdapter;
 
@@ -22,9 +26,10 @@ import java.util.List;
 
 public class MatchListActivity extends AppCompatActivity {
 
-    private long accountId;
+    private Summoner summoner;
     private SwipeRefreshLayout swiperefresh;
     private GameSummonerAdapter adapter;
+    private List<GameSummoner> matches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +57,15 @@ public class MatchListActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             swiperefresh.setRefreshing(true);
-            getAccountIdFromIntent();
+            getSummonerFromIntent();
         }
 
         @Override
         protected List<GameSummoner> doInBackground(Void... params) {
             return JsonParser.jsonToGameSummoners(
-                    DataProvider.getMatchListByAccountId(accountId),
-                    DataProvider.getChampionsStaticData());
+                    DataProvider.getMatchListByAccountId(summoner.getAccountId()),
+                    DataProvider.getChampionsStaticData(),
+                    summoner);
         }
 
         @Override
@@ -68,11 +74,12 @@ public class MatchListActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Unable de retrieve History", Toast.LENGTH_LONG).show();
                 MatchListActivity.this.onBackPressed();
             }else {
-                adapter = new GameSummonerAdapter(gameSummoners);
-                ListView history = (ListView) findViewById(R.id.historyListView);
-                history.setAdapter(adapter);
+                matches = gameSummoners;
+                adapter = new GameSummonerAdapter(matches);
+                ((ListView)findViewById(R.id.historyListView)).setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
+                /*
                 history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,13 +88,14 @@ public class MatchListActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+                */
             }
 
             swiperefresh.setRefreshing(false);
         }
     }
 
-    public void getAccountIdFromIntent(){
-        accountId = SummonerDetailActivity.getAccountId();
+    public void getSummonerFromIntent(){
+        summoner = SummonerDetailActivity.getSummoner();
     }
 }

@@ -84,7 +84,7 @@ public class SummonerStatsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLeaguePoints()));
         ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(100*((float)summoner.getWins()/((float)summoner.getLoses()+(float)summoner.getWins())))+ " %");
 
-
+        SummonerDetailActivity.setSummoner(summoner);
         SummonerDetailActivity.setAccountId(summoner.getAccountId());
         /*
         ((Button)findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {

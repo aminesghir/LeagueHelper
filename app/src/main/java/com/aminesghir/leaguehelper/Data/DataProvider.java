@@ -2,6 +2,7 @@ package com.aminesghir.leaguehelper.Data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,12 +12,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 
 
 public class DataProvider {
 
     private static final String API_KEY = "RGAPI-c9cf9b74-18c1-4c73-902d-eddcefd156c4";
     private static final int STATUS_OK = 200;
+    private static final int STATUS_RATE_LIMIT_EXCEEDED = 429;
+
+
 
     public static String getSummonerByName(String summonerName){
         HttpURLConnection urlConnection = null;
@@ -35,6 +44,13 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+            while(urlConnection.getResponseCode() == STATUS_RATE_LIMIT_EXCEEDED){
+                SystemClock.sleep(1000);
+
+                urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+            }
             if(urlConnection.getResponseCode() != STATUS_OK){
                 return null;
             }
@@ -94,6 +110,14 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+
+            while(urlConnection.getResponseCode() == STATUS_RATE_LIMIT_EXCEEDED){
+                SystemClock.sleep(1000);
+
+                urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+            }
             if(urlConnection.getResponseCode() != STATUS_OK){
                 return null;
             }
@@ -153,6 +177,13 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+            while(urlConnection.getResponseCode() == STATUS_RATE_LIMIT_EXCEEDED){
+                SystemClock.sleep(1000);
+
+                urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+            }
             if(urlConnection.getResponseCode() != STATUS_OK){
                 return null;
             }
@@ -210,6 +241,13 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+            while(urlConnection.getResponseCode() == STATUS_RATE_LIMIT_EXCEEDED){
+                SystemClock.sleep(1000);
+
+                urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+            }
             if(urlConnection.getResponseCode() != STATUS_OK){
                 return null;
             }
@@ -287,6 +325,13 @@ public class DataProvider {
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
+            while(urlConnection.getResponseCode() == STATUS_RATE_LIMIT_EXCEEDED){
+                SystemClock.sleep(1000);
+
+                urlConnection = (HttpURLConnection)url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+            }
             if(urlConnection.getResponseCode() != STATUS_OK){
                 return null;
             }

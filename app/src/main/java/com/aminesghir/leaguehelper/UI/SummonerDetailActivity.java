@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.aminesghir.leaguehelper.Data.Model.Summoner;
+
 public class SummonerDetailActivity extends TabActivity {
 
     private static long accountId;
+    private static Summoner summoner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,9 +27,14 @@ public class SummonerDetailActivity extends TabActivity {
 
     }
 
-    public static long getAccountId() {
-        return accountId;
+    public static Summoner getSummoner() {
+        return summoner;
     }
+
+    public static void setSummoner(Summoner summoner) {
+        SummonerDetailActivity.summoner = summoner;
+    }
+
 
     public static void setAccountId(long id){
         accountId = id;

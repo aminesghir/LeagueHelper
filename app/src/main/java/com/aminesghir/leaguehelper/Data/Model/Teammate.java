@@ -60,4 +60,5 @@ public class Teammate {
     public void setWinner(boolean win) {
         this.winner = win;
     }
+
 }

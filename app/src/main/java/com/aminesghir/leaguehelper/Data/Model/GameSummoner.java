@@ -2,12 +2,17 @@ package com.aminesghir.leaguehelper.Data.Model;
 
 import com.aminesghir.leaguehelper.Data.Model.StaticData.Champion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by user on 04/05/2017.
  */
 
 public class GameSummoner {
 
+    private Game game;
+    private Summoner summoner;
     private long gameId;
     private String region;
     private int queueId;
@@ -17,6 +22,22 @@ public class GameSummoner {
     private String role;
     private String lane;
     private boolean win;
+
+    public Summoner getSummoner() {
+        return summoner;
+    }
+
+    public void setSummoner(Summoner summoner) {
+        this.summoner = summoner;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     public Champion getChampion() {
         return champion;
@@ -72,12 +93,26 @@ public class GameSummoner {
     }
 
     public boolean isWin() {
-        return win;
+        return this.win;
     }
 
-    public void setWin(boolean win) {
-        this.win = win;
+    public void setWin(){
+        if(this.getGame().getWinners() != null) {
+
+            boolean valueSet = false;
+            ArrayList<Teammate> winners = new ArrayList<>(this.getGame().getWinners());
+            for (int i = 0; i < winners.size(); i++) {
+                if (winners.get(i).getSummoner().getId() == this.getSummoner().getId()) {
+                    this.win = true;
+                    valueSet = true;
+                }
+            }
+            if (!valueSet) {
+                this.win = false;
+            }
+        }
     }
+
 
 
     public String getRegion() {
