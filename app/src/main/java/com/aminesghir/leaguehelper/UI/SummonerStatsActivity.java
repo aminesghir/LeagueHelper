@@ -88,16 +88,7 @@ public class SummonerStatsActivity extends AppCompatActivity {
 
         SummonerDetailActivity.setSummoner(summoner);
         SummonerDetailActivity.setAccountId(summoner.getAccountId());
-        /*
-        ((Button)findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SummonerStatsActivity.this, MatchListActivity.class);
-                //intent.putExtra("ACCOUNT_ID", summoner.getAccountId());
-                startActivity(intent);
-            }
-        });
-        */
+
     }
 
     private void getSummonerNameFromIntent() {

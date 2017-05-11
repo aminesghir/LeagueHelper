@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LeagueHelper</string>
+    <string name="app_name">League Helper</string>
     <string name="title_activity_summoner_detail">SummonerDetailActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
