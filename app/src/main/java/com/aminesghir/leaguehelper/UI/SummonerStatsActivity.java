@@ -84,7 +84,7 @@ public class SummonerStatsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.nameTextView)).setText(summoner.getTier()+ " - " +summoner.getRank());
         ((TextView)findViewById(R.id.levelTextView)).setText(String.valueOf(summoner.getLeaguePoints()));
         ((ProgressBar)findViewById(R.id.circularProgressbar)).setProgress((int)summoner.getWinrate());
-        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(String.valueOf(summoner.getWinrate()).substring(0,4) + "%"));
+        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(String.valueOf(summoner.getWinrate()).substring(0,2) + "%"));
 
         SummonerDetailActivity.setSummoner(summoner);
         SummonerDetailActivity.setAccountId(summoner.getAccountId());

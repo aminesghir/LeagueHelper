@@ -14,6 +14,9 @@ public class Research {
     private String text;
     private String date;
 
+    public Research(){
+
+    }
     public Research(String s){
         this.text = s;
         this.date = String.valueOf(new Date());

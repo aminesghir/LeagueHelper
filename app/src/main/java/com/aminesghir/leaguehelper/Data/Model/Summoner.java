@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 public class Summoner {
 
     private long id;
+    private int iconId;
     private long accountId;
     private String name;
     private int level;
@@ -13,6 +14,14 @@ public class Summoner {
     private int leaguePoints;
     private int wins;
     private int loses;
+
+    public int getIconId() {
+        return iconId;
+    }
+
+    public void setIconId(int iconId) {
+        this.iconId = iconId;
+    }
 
     public String getTier() {
         return tier;

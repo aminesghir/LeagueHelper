@@ -1,9 +1,14 @@
 package com.aminesghir.leaguehelper.Data.Database;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 
 import com.aminesghir.leaguehelper.Data.Model.Research;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,77 +18,84 @@ import java.util.List;
  */
 
 public class ResearchDao {
-    private final DatabaseHelper DbHelper;
+    private SQLiteDatabase db;
+    private DatabaseHelper dbHelper;
 
-    public ResearchDao(DatabaseHelper DbHelper) {
-        this.DbHelper = DbHelper;
+    public ResearchDao(Context context) {
+        dbHelper = new DatabaseHelper(context);
     }
 
-    public boolean isDataAlreadyInDBorNot(String TableName, String dbfield, String fieldValue) {
-        SQLiteDatabase sqldb = DbHelper.getReadableDatabase();
-        String Query = "SELECT * FROM '"+TableName+"' where '"+dbfield+"' = '"+fieldValue+"'";
-            Cursor cursor = sqldb.rawQuery(Query, null);
-            if(cursor.getCount() <= 0){
-                cursor.close();
-                return false;
-            }
-            cursor.close();
-            return true;
-
+    public void open(){
+        db = dbHelper.getWritableDatabase();
     }
 
-    public void save(String text){
-        Research research = new Research(text);
-        if(isDataAlreadyInDBorNot(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.KEYWORD_COLUMN, text)){
-            DbHelper.getWritableDatabase()
-                    .update("'"+DatabaseContract.ResearchTable.TABLE_NAME+"'",
-                            research.toContentValues(),
-                            "'"+DatabaseContract.ResearchTable.KEYWORD_COLUMN +"' = '"+text+"'",
-                            null);
-        }else {
-            DbHelper.getWritableDatabase().insert("'"+DatabaseContract.ResearchTable.TABLE_NAME+"'", null, research.toContentValues());
-        }
-    }
-/*
-    public long save(Research research) {
-        //-------------------------------
-        DbHelper.getWritableDatabase().delete(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.RESEARCH_COLUMN+" ="+String.valueOf(research.getText()), null);
-        //-------------------------------
-        return DbHelper.getWritableDatabase()
-                .insert(DatabaseContract.ResearchTable.TABLE_NAME, null, research.toContentValues());
+    public void close(){
+        db.close();
     }
 
-    public List<Research> retrievePosts() {
+    public SQLiteDatabase getDb() {
+        return db;
+    }
 
+    public long insertResearch(Research research) {
+        ContentValues values = new ContentValues();
 
-        Cursor cursor = productHuntDbHelper.getReadableDatabase()
-                .query(DataBaseContract.PostTable.TABLE_NAME,
-                        DataBaseContract.PostTable.PROJECTIONS,
-                        null, null, null, null, null);
+        values.put(DatabaseContract.ResearchTable.KEYWORD_COLUMN, research.getText());
+        values.put(DatabaseContract.ResearchTable.DATE_COLUMN, research.getDate());
 
-        List<Research> posts = new ArrayList<>(cursor.getCount());
+        return db.insert(DatabaseContract.ResearchTable.TABLE_NAME, null, values);
+    }
 
-        if (cursor.moveToFirst()) {
-            do {
+    public long updateResearch(String text, Research research) {
+        ContentValues values = new ContentValues();
 
-                Post post = new Post();
+        values.put(DatabaseContract.ResearchTable.KEYWORD_COLUMN, research.getText());
+        values.put(DatabaseContract.ResearchTable.DATE_COLUMN, research.getDate());
+        String[] args = new String[]{text};
+        return db.update(DatabaseContract.ResearchTable.TABLE_NAME, values, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " =?", args);
+    }
 
-                post.setId(cursor.getInt(0));
-                post.setTitle(cursor.getString(1));
-                post.setSubTitle(cursor.getString(2));
-                post.setUrlImage(cursor.getString(3));
-                post.setPostUrl(cursor.getString(4));
-                //---------------------------------------------------
-                post.setDate(cursor.getString(5));
-                post.setNbComments(cursor.getInt(6));
-                //---------------------------------------------------
-                posts.add(post);
+    public int deleteResearch(String text){
+        String[] args = new String[]{text};
+        return db.delete(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " =? ", args);
+    }
 
-
-            } while (cursor.moveToNext());
+    public List<Research> cursorToListResearch(Cursor c, int size){
+        if(c.getCount() == 0){
+            return null;
         }
 
-        return posts;
+        List<Research> list = new ArrayList<>(c.getCount());
+        int counter = 0;
+        c.moveToLast();
+        while(!c.isBeforeFirst() && counter < size ){
+            Research research = new Research();
+
+            research.setText(c.getString(0));
+            research.setDate(c.getString(1));
+
+            list.add(research);
+            c.moveToPrevious();
+            counter++;
+        }
+
+        c.close();
+
+        return list;
     }
-    */
+
+    public Research getResearch(String text){
+        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN}, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " LIKE \"" + text +"\"", null, null, null, null);
+        if(c.getCount() > 0) {
+            return cursorToListResearch(c,1).get(0);
+        }else{
+            return null;
+        }
+    }
+
+    public List<Research> getRecentResearches(int size){
+        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN},null, null, null, null, null);
+        return cursorToListResearch(c, size);
+    }
+
 }

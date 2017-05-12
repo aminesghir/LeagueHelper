@@ -11,6 +11,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static final String TABLE_LIVRES = "table_livres";
+    private static final String COL_ID = "ID";
+    private static final String COL_ISBN = "ISBN";
+    private static final String COL_TITRE = "Titre";
+
+
     public DatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
     }
