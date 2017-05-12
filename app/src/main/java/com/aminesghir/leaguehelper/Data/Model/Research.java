@@ -37,7 +37,7 @@ public class Research {
 
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseContract.ResearchTable.RESEARCH_COLUMN, text);
+        contentValues.put(DatabaseContract.ResearchTable.KEYWORD_COLUMN, text);
         contentValues.put(DatabaseContract.ResearchTable.DATE_COLUMN, date);
 
         return contentValues;

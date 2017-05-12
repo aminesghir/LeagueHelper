@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 researchDao.save(research);
 
                 Log.i("LOOOOOOOL", "lkjlkjlh");
-                System.out.println(researchDao.isDataAlreadyInDBorNot(DatabaseContract.ResearchTable.TABLE_NAME,DatabaseContract.ResearchTable.RESEARCH_COLUMN,research));
+                System.out.println(researchDao.isDataAlreadyInDBorNot(DatabaseContract.ResearchTable.TABLE_NAME,DatabaseContract.ResearchTable.KEYWORD_COLUMN,research));
                 intent.putExtra("SUMMONER_NAME", research);
                 startActivity(intent);
             }

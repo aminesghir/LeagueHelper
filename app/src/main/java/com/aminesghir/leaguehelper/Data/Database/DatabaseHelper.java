@@ -15,15 +15,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
     }
 
-    @Override public void onCreate(SQLiteDatabase db) {
-        //--------------------------------
-        db.execSQL(DatabaseContract.ResearchTable.SQL_DROP_POST_TABLE);
-        //--------------------------------
-        db.execSQL(DatabaseContract.ResearchTable.SQL_CREATE_POST_TABLE);
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DatabaseContract.ResearchTable.SQL_CREATE_RESEARCH_TABLE);
     }
 
-    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //onUpgrade(db, oldVersion, newVersion);
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DatabaseContract.ResearchTable.SQL_DROP_RESEARCH_TABLE);
         onCreate(db);
     }
 }

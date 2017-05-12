@@ -34,11 +34,11 @@ public class ResearchDao {
 
     public void save(String text){
         Research research = new Research(text);
-        if(isDataAlreadyInDBorNot(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.RESEARCH_COLUMN, text)){
+        if(isDataAlreadyInDBorNot(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.KEYWORD_COLUMN, text)){
             DbHelper.getWritableDatabase()
                     .update("'"+DatabaseContract.ResearchTable.TABLE_NAME+"'",
                             research.toContentValues(),
-                            "'"+DatabaseContract.ResearchTable.RESEARCH_COLUMN +"' = '"+text+"'",
+                            "'"+DatabaseContract.ResearchTable.KEYWORD_COLUMN +"' = '"+text+"'",
                             null);
         }else {
             DbHelper.getWritableDatabase().insert("'"+DatabaseContract.ResearchTable.TABLE_NAME+"'", null, research.toContentValues());
