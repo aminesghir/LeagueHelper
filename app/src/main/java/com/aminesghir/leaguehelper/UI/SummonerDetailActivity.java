@@ -22,6 +22,7 @@ public class SummonerDetailActivity extends TabActivity {
 
         mTabHost.addTab(mTabHost.newTabSpec("stats").setIndicator("Stats").setContent(new Intent(this  ,SummonerStatsActivity.class )));
         mTabHost.addTab(mTabHost.newTabSpec("history").setIndicator("History").setContent(new Intent(this , MatchListActivity.class )));
+        mTabHost.addTab(mTabHost.newTabSpec("spectate").setIndicator("Spectate").setContent(new Intent(this , SummonerSpectateActivity.class )));
         mTabHost.setCurrentTab(0);
 
 
