@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="84dp"
         android:orientation="horizontal"
         android:padding="10dp">
         <ImageView
@@ -18,17 +18,26 @@
             android:id="@+id/iconImage"
             android:background="@color/colorPrimary"
             android:layout_width="64dp"
-            android:layout_height="64dp" />
-        <TextView
-            android:id="@+id/idTextView"
-            android:layout_marginLeft="20dp"
+            android:layout_height="match_parent" />
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Summoner Name"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimaryDark"/>
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
+            <TextView
+                android:id="@+id/idTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Summoner Name"
+                android:textSize="30sp"
+                android:layout_gravity="top"
+                android:textColor="@color/colorPrimaryDark"/>
+            <TextView
+                android:id="@+id/elo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DIVISION RANK - LPs"/>
+        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
@@ -43,51 +52,7 @@
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:text="Rank :"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/nameTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="LP :"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/levelTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:textSize="20sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,25 +72,24 @@
                     android:textSize="20sp" />
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <ProgressBar
 
-                    android:id="@+id/circularProgressbar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:max="100"
-                    android:progress="20"
-                    android:layout_centerInParent="true"
-                    android:progressDrawable="@drawable/circular"
-                    android:secondaryProgress="100"
+                        android:id="@+id/circularProgressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:layout_centerInParent="true"
+                        android:progressDrawable="@drawable/circular"
+                        android:secondaryProgress="100"
                         android:indeterminate="false"
                         android:indeterminateTintMode="src_atop"
                         android:indeterminateTint="@color/colorPrimaryDark"
-                    />
+                        />
 
                     <TextView
                         android:id="@+id/accountIdTextView"

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final ResearchAdapter researchAdapter = new ResearchAdapter();
+    ResearchAdapter researchAdapter = new ResearchAdapter();
 
     ResearchDao researchDao = new ResearchDao(this);
 
@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         ((Button)findViewById(R.id.button)).setOnClickListener(searchSummoner);
 
-        ResearchAdapter researchAdapter = new ResearchAdapter(researchDao.getRecentResearches(5));
+
+        researchAdapter = new ResearchAdapter(researchDao.getRecentResearches(5));
         ((ListView)findViewById(R.id.recentResearch)).setAdapter(researchAdapter);
 
         ((ListView)findViewById(R.id.recentResearch)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ((EditText)findViewById(R.id.summonerName)).setText("");
         researchAdapter.show(researchDao.getRecentResearches(5));
     }
 

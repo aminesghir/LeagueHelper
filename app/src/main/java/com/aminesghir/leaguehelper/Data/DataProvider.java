@@ -290,24 +290,7 @@ public class DataProvider {
         return response;
     }
 
-    public static Bitmap getChampionImage(String key){
 
-        try {
-            URL url = new URL(
-                    "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/"+
-                            key + ".png");
-
-            return BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public static String getLeagueData(long SummonerId){
         HttpURLConnection urlConnection = null;

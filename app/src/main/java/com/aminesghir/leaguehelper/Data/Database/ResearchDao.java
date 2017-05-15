@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.ContactsContract;
 
+import com.aminesghir.leaguehelper.Data.DataProvider;
 import com.aminesghir.leaguehelper.Data.Model.Research;
 
 import org.w3c.dom.Text;
@@ -60,23 +61,21 @@ public class ResearchDao {
         return db.delete(DatabaseContract.ResearchTable.TABLE_NAME, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " =? ", args);
     }
 
-    public List<Research> cursorToListResearch(Cursor c, int size){
+    public List<Research> cursorToListResearch(Cursor c){
         if(c.getCount() == 0){
             return null;
         }
 
         List<Research> list = new ArrayList<>(c.getCount());
-        int counter = 0;
-        c.moveToLast();
-        while(!c.isBeforeFirst() && counter < size ){
+        c.moveToFirst();
+        while(!c.isAfterLast() ){
             Research research = new Research();
 
             research.setText(c.getString(0));
             research.setDate(c.getString(1));
 
             list.add(research);
-            c.moveToPrevious();
-            counter++;
+            c.moveToNext();
         }
 
         c.close();
@@ -85,17 +84,18 @@ public class ResearchDao {
     }
 
     public Research getResearch(String text){
-        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN}, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " LIKE \"" + text +"\"", null, null, null, null);
+        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN}, DatabaseContract.ResearchTable.KEYWORD_COLUMN + " LIKE \"" + text +"\"", null, null, null, DatabaseContract.ResearchTable.DATE_COLUMN + " DESC", String.valueOf(1));
         if(c.getCount() > 0) {
-            return cursorToListResearch(c,1).get(0);
+            return cursorToListResearch(c).get(0);
         }else{
             return null;
         }
     }
 
     public List<Research> getRecentResearches(int size){
-        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN},null, null, null, null, null);
-        return cursorToListResearch(c, size);
+        Cursor c = db.query(DatabaseContract.ResearchTable.TABLE_NAME, new String[]{DatabaseContract.ResearchTable.KEYWORD_COLUMN, DatabaseContract.ResearchTable.DATE_COLUMN},null, null, DatabaseContract.ResearchTable.KEYWORD_COLUMN, null, DatabaseContract.ResearchTable.DATE_COLUMN + " DESC", String.valueOf(size));
+        //Cursor c = db.rawQuery("SELECT " + DatabaseContract.ResearchTable.KEYWORD_COLUMN + " FROM " + DatabaseContract.ResearchTable.TABLE_NAME, null);
+        return cursorToListResearch(c);
     }
 
 }
