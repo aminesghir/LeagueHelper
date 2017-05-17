@@ -97,12 +97,12 @@ public class SummonerStatsActivity extends AppCompatActivity {
 
         if(imageView.getDrawable() == null) {
             String iconId = String.valueOf(summoner.getIconId());
-            new DownloadImageTask(imageView).execute("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + iconId + ".png");
+            new DownloadImageTask(imageView).execute("http://ddragon.leagueoflegends.com/cdn/7.10.1/img/profileicon/" + iconId + ".png");
         }
 
         ((TextView)findViewById(R.id.idTextView)).setText(summoner.getName());
         ((TextView)findViewById(R.id.elo)).setText(summoner.getPrintableElo());
-        if(!String.valueOf(summoner.getWinrate()).equals("NaN")) {
+        if(summoner.getWinrate() != -1) {
             ((ProgressBar) findViewById(R.id.circularProgressbar)).setProgress((int) summoner.getWinrate());
             ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(summoner.getWinrate()).substring(0,2) + "%");
         }

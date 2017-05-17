@@ -2,6 +2,7 @@ package com.aminesghir.leaguehelper.Data;
 
 import com.aminesghir.leaguehelper.Data.Model.Game;
 import com.aminesghir.leaguehelper.Data.Model.GameSummoner;
+import com.aminesghir.leaguehelper.Data.Model.LeagueInfo;
 import com.aminesghir.leaguehelper.Data.Model.StaticData.Champion;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import com.aminesghir.leaguehelper.Data.Model.Teammate;
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -205,12 +207,48 @@ public class JsonParser {
 
             for(int i = 0; i<ja.length(); i++){
                 JSONObject jo = ja.getJSONObject(i);
+
+                LeagueInfo leagueInfo = new LeagueInfo();
+                leagueInfo.setLeagueName(jo.getString("leagueName"));
+                leagueInfo.setTier(jo.getString("tier"));
+                leagueInfo.setRank(jo.getString("rank"));
+                leagueInfo.setLeaguePoints(jo.getInt("leaguePoints"));
+                leagueInfo.setWins(jo.getInt("wins"));
+                leagueInfo.setLosses(jo.getInt("losses"));
+
+                List<String> status = new ArrayList<>();
+
+                if(jo.getBoolean("veteran"))
+                {
+                    status.add("veteran");
+                }
+
+                if(jo.getBoolean("inactive"))
+                {
+                    status.add("inactive");
+                }
+
+                if(jo.getBoolean("freshBlood"))
+                {
+                    status.add("freshBlood");
+                }
+
+                if(jo.getBoolean("hotStreak"))
+                {
+                    status.add("hotStreak");
+                }
+
+                leagueInfo.setStatus(status);
+
                 if(jo.getString("queueType").equals("RANKED_SOLO_5x5")){
-                    summoner.setTier(jo.getString("tier"));
-                    summoner.setRank(jo.getString("rank"));
-                    summoner.setLeaguePoints(jo.getInt("leaguePoints"));
-                    summoner.setWins(jo.getInt("wins"));
-                    summoner.setLoses(jo.getInt("losses"));
+                    summoner.setSoloQData(leagueInfo);
+                }
+                else if(jo.getString("queueType").equals("RANKED_FLEX_SR")){
+                    summoner.setFlexSRData(leagueInfo);
+                }
+                else if(jo.getString("queueType").equals("RANKED_FLEX_TT")){
+                    summoner.setFlexTTData(leagueInfo);
+
                 }
             }
 

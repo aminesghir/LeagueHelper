@@ -90,7 +90,7 @@ public class GameSummonerAdapter extends BaseAdapter {
 
         if(imageView.getDrawable() == null) {
             String key = (gameSummoner.getChampion().getKey().equals("Fiddlesticks"))?"FiddleSticks":gameSummoner.getChampion().getKey();
-            new DownloadImageTask(imageView).execute("https://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/" + key + ".png");
+            new DownloadImageTask(imageView).execute("https://ddragon.leagueoflegends.com/cdn/7.10.1/img/champion/" + key + ".png");
         }
         if(loadData.get(position)) {
             (new AddGameDataTask(convertView)).execute(getItem(position));

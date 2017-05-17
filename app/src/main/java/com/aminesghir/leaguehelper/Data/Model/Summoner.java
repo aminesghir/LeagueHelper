@@ -9,11 +9,38 @@ public class Summoner {
     private long accountId;
     private String name;
     private int level;
-    private String tier;
-    private String rank;
-    private int leaguePoints;
-    private int wins;
-    private int loses;
+
+    private LeagueInfo soloQData;
+    private LeagueInfo flexSRData;
+    private LeagueInfo flexTTData;
+
+    public Summoner(){
+        this.level = 30;
+    }
+
+    public LeagueInfo getSoloQData() {
+        return soloQData;
+    }
+
+    public void setSoloQData(LeagueInfo soloQData) {
+        this.soloQData = soloQData;
+    }
+
+    public LeagueInfo getFlexSRData() {
+        return flexSRData;
+    }
+
+    public void setFlexSRData(LeagueInfo flexSRData) {
+        this.flexSRData = flexSRData;
+    }
+
+    public LeagueInfo getFlexTTData() {
+        return flexTTData;
+    }
+
+    public void setFlexTTData(LeagueInfo flexTTData) {
+        this.flexTTData = flexTTData;
+    }
 
     public int getIconId() {
         return iconId;
@@ -21,50 +48,6 @@ public class Summoner {
 
     public void setIconId(int iconId) {
         this.iconId = iconId;
-    }
-
-    public String getTier() {
-        return tier;
-    }
-
-    public void setTier(String tier) {
-        this.tier = tier;
-    }
-
-    public String getRank() {
-        return rank;
-    }
-
-    public void setRank(String rank) {
-        this.rank = rank;
-    }
-
-    public int getLeaguePoints() {
-        return leaguePoints;
-    }
-
-    public void setLeaguePoints(int leaguePoints) {
-        this.leaguePoints = leaguePoints;
-    }
-
-    public int getWins() {
-        return wins;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public int getLoses() {
-        return loses;
-    }
-
-    public void setLoses(int loses) {
-        this.loses = loses;
-    }
-
-    public Summoner(){
-        this.level = 30;
     }
 
     public long getId(){ return this.id; }
@@ -88,15 +71,21 @@ public class Summoner {
     }
 
     public float getWinrate(){
-        float p = (this.getWins() * 100.0f)/(this.getLoses()+this.getWins());
-        return p;
+        if(this.getSoloQData() != null) {
+            float p = (this.getSoloQData().getWins() * 100.0f) / (this.getSoloQData().getLosses() + this.getSoloQData().getWins());
+            return p;
+        }
+        return -1;
     }
 
     public String getPrintableElo(){
-        if (this.getTier() != null && this.getRank() != null) {
-            return this.getTier() + " " + this.getRank() + " - " + String.valueOf(this.getLeaguePoints());
+        if (this.soloQData != null) {
+            return this.getSoloQData().getTier() +
+                    ((this.getSoloQData().getTier().equals("MASTER") || this.getSoloQData().getTier().equals("CHALLENGER"))?"":" " +this.getSoloQData().getRank()) +
+                    " - "
+                    + String.valueOf(this.getSoloQData().getLeaguePoints());
         }else{
-            return "Unranked";
+            return "Level " + String.valueOf(this.getLevel());
         }
     }
 }
