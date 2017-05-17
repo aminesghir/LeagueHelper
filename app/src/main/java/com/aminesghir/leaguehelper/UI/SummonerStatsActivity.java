@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aminesghir.leaguehelper.Data.DataProvider;
+import com.aminesghir.leaguehelper.Data.Database.ResearchDao;
 import com.aminesghir.leaguehelper.Data.JsonParser;
+import com.aminesghir.leaguehelper.Data.Model.Research;
 import com.aminesghir.leaguehelper.R;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import com.aminesghir.leaguehelper.UI.AsyncTask.DownloadImageTask;
@@ -67,6 +69,9 @@ public class SummonerStatsActivity extends AppCompatActivity {
                 displayLeagueDataTask.execute();
             }else{
                 Toast.makeText(getApplicationContext(), "Summoner not found", Toast.LENGTH_LONG).show();
+                ResearchDao researchDao = new ResearchDao(SummonerStatsActivity.this);
+                researchDao.open();
+                researchDao.deleteResearch(summonerName);
                 SummonerStatsActivity.this.onBackPressed();
             }
         }
