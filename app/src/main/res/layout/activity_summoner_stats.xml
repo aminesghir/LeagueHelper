@@ -72,15 +72,16 @@
                     android:textSize="20sp" />
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
 
                     <ProgressBar
 
                         android:id="@+id/circularProgressbar"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:max="100"
                         android:progress="0"
                         android:layout_centerInParent="true"

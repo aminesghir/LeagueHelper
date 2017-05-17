@@ -31,6 +31,7 @@ public class JsonParser {
             summoner.setName(jo.getString("name"));
             summoner.setLevel(jo.getInt("summonerLevel"));
             summoner.setAccountId(jo.getLong("accountId"));
+            summoner.setIconId(jo.getInt("profileIconId"));
 
 
             return summoner;

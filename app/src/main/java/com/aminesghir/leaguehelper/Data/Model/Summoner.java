@@ -91,4 +91,12 @@ public class Summoner {
         float p = (this.getWins() * 100.0f)/(this.getLoses()+this.getWins());
         return p;
     }
+
+    public String getPrintableElo(){
+        if (this.getTier() != null && this.getRank() != null) {
+            return this.getTier() + " " + this.getRank() + " - " + String.valueOf(this.getLeaguePoints());
+        }else{
+            return "Unranked";
+        }
+    }
 }

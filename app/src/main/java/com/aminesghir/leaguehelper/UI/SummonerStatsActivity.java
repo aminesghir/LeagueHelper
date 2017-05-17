@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,9 @@ import com.aminesghir.leaguehelper.Data.DataProvider;
 import com.aminesghir.leaguehelper.Data.JsonParser;
 import com.aminesghir.leaguehelper.R;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
+import com.aminesghir.leaguehelper.UI.AsyncTask.DownloadImageTask;
+
+import java.io.Console;
 
 public class SummonerStatsActivity extends AppCompatActivity {
 
@@ -25,8 +30,17 @@ public class SummonerStatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner_stats);
 
-        DisplayDataTask displayData = new DisplayDataTask();
-        displayData.execute();
+        displayData();
+
+
+
+    }
+
+    private void displayData() {
+        new DisplayDataTask().execute();
+
+        ((TextView)findViewById(R.id.idTextView)).setText("Retrieving "+summonerName+"'s data...");
+
 
 
 
@@ -79,13 +93,24 @@ public class SummonerStatsActivity extends AppCompatActivity {
 
     private void displaySummonerInfo() {
 
+        ImageView imageView = (ImageView)findViewById(R.id.iconImage);
+
+        if(imageView.getDrawable() == null) {
+            String iconId = String.valueOf(summoner.getIconId());
+            new DownloadImageTask(imageView).execute("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/" + iconId + ".png");
+        }
+
         ((TextView)findViewById(R.id.idTextView)).setText(summoner.getName());
-        ((TextView)findViewById(R.id.elo)).setText(summoner.getTier()+ " " +summoner.getRank() + " - " + String.valueOf(summoner.getLeaguePoints()));
-        ((ProgressBar)findViewById(R.id.circularProgressbar)).setProgress((int)summoner.getWinrate());
-        ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(String.valueOf(summoner.getWinrate()).substring(0,2) + "%"));
+        ((TextView)findViewById(R.id.elo)).setText(summoner.getPrintableElo());
+        if(!String.valueOf(summoner.getWinrate()).equals("NaN")) {
+            ((ProgressBar) findViewById(R.id.circularProgressbar)).setProgress((int) summoner.getWinrate());
+            ((TextView)findViewById(R.id.accountIdTextView)).setText(String.valueOf(summoner.getWinrate()).substring(0,2) + "%");
+        }
 
         SummonerDetailActivity.setSummoner(summoner);
         SummonerDetailActivity.setAccountId(summoner.getAccountId());
+
+
 
     }
 
