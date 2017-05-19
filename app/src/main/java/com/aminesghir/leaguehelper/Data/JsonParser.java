@@ -3,6 +3,7 @@ package com.aminesghir.leaguehelper.Data;
 import com.aminesghir.leaguehelper.Data.Model.Game;
 import com.aminesghir.leaguehelper.Data.Model.GameSummoner;
 import com.aminesghir.leaguehelper.Data.Model.LeagueInfo;
+import com.aminesghir.leaguehelper.Data.Model.LiveGame;
 import com.aminesghir.leaguehelper.Data.Model.StaticData.Champion;
 import com.aminesghir.leaguehelper.Data.Model.Summoner;
 import com.aminesghir.leaguehelper.Data.Model.Teammate;
@@ -255,6 +256,61 @@ public class JsonParser {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public LiveGame jsonToLiveGame(String json){
+        try {
+            LiveGame game = new LiveGame();
+
+            JSONObject jo = new JSONObject(json);
+
+            game.setId(jo.getLong("gameId"));
+            game.setRegion(jo.getString("platformId"));
+            game.setDuration(jo.getInt("gameDuration"));
+            game.setQueue(jo.getInt("gameQueueConfigId"));
+            game.setMapId(jo.getInt("mapId"));
+            game.setMode(jo.getString("gameMode"));
+            game.setType(jo.getString("gameType"));
+
+
+
+
+
+            JSONArray participants = jo.getJSONArray("participants");
+
+            List<Teammate> teammates = new ArrayList<>(participants.length());
+
+            JSONObject data;
+
+            for (int i = 0; i < participants.length(); i++) {
+                data = participants.getJSONObject(i);
+
+                Teammate teammate = new Teammate();
+
+                teammate.setChampionId(data.getInt("championId"));
+                teammate.setTeamId(data.getInt("teamId"));
+
+
+                Summoner summoner = new Summoner();
+                summoner.setId(data.getLong("summonerId"));
+                summoner.setName(data.getString("summonerName"));
+
+                teammate.setSummoner(summoner);
+
+                teammates.add(teammate);
+            }
+
+            game.setParticipants(teammates);
+
+
+            return game;
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
